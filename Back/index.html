@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="text" id="1234">
+    <button onclick="gettracking()">Submit</button>
+
+    <h2>Delivery bOy ui</h2>
+    <p>6198eb9d595a4cb370bb5b83
+    <button>Delivering now</button>
+    <button>delivered</button>
+    </p>
+    <p>6198eba1595a4cb370bb5b85
+        <button>Delivering now</button>
+        <button>delivered</button>
+    </p>
+
+
+    <h2>USER SIDE UI</h2>
+    <p>track your order <input><button>sEARCH</button></p>
+    <!-- status is false -->
+    <!-- delivery true -->
+    <!--  -->
+    <p>Your order is out for delivery.</p>
+    <!-- status is true -->
+    <p>the delivery boy is on his way to deliver your order now</p><button>Track your order</button>
+
+    <h2>tracking</h2>
+    <p>authenticate</p>
+    <p>your delivery boy is at katgodham</p>
+
+</body>
+</html>
+<script>
+    function gettracking(){
+        // console.log("done");
+        // let inputV = document.getElementById("1234").value;
+        fetch("http://localhost:2345/product/6199126dd63b324994b13212").then(response=> response.json()).then(data => console.log(data));
+        // var text;
+        // fetch("http://localhost:2345/6199126dd63b324994b13212").then(response=> response.json()).then(data => text=JSON.stringify(data));
+        // document.getElementById("2333").innerText = text;
+        // console.log(inputV);
+    }
+</script>
