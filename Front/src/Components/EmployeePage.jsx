@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
+import { EmployeeContext } from '../Context/EmployeeLocation'
 import { Navbar } from './Navbar'
 
 export default function EmployeePage() {
     const [status, setStatus] = useState(false)
+    const {handleEmployeeLocation} = useContext(EmployeeContext)
     const data = [
         {
         productId: "fjlafaaffafljj",
@@ -41,6 +43,8 @@ export default function EmployeePage() {
         notify:false
     }
 ]
+
+
 const handleNotify = (id) =>{
     data.map((item) => item.id === id ? {...item, notify:true}: item)
     setStatus(true)
@@ -83,12 +87,17 @@ const getCordinates = () => {
         )
         .then(response => response.json())
         .then(data =>{
-           console.log(data.items[0].address)
+            console.log(data.items[0].address)
+           localStorage.setItem("location", JSON.stringify(data.items[0].address))
           });
     }, 1000);
   };
+
+//   Tfzn48GFLldThtLmzi5tv8B4xQG3NeQ_Bvhcc2_k1Qs
+//   F4NOucAeGs_1k8Lh0YGGfT_vYV_tNl7x6isUF3pePlQ
   useEffect(()=>{
-      setInterval(getAddress(),5000)      
+    //   setInterval(getAddress(),50000)      
+    getAddress()
   },[])
     return (
         <>
