@@ -1,32 +1,50 @@
-import React, {  useState } from 'react'
+import React, {  useContext, useEffect, useState } from 'react'
 import { Navbar } from './Navbar'
 import axios from 'axios';
+import { EmployeeContext } from '../Context/EmployeeLocation';
 
-
+/*
+https://geocode.search.hereapi.com/v1/geocode?apiKey=Tfzn48GFLldThtLmzi5tv8B4xQG3NeQ_Bvhcc2_k1Qs&q=5%20Rue%20Daunou%2C%2075000%20Paris%2C%20France
+*/
 export default function TrackProduct() {
     const [trackingId, setTrackingId] = useState("")
     const [product, setProduct] = useState([])
-
-
+    
     const handleInput = (text) => {
         setTrackingId(text)
     }
-
+    
     const handleSearch = () => {
         if (trackingId.length !== 0) {
             axios.get("http://localhost:2345/product/" + trackingId)
-                .then((res) => {
-                    setProduct(res.data.data);
-                    console.log(product);
-                    setTrackingId("");
-                })
+            .then((res) => {
+                setProduct(res.data.data);
+                setTrackingId("");
+                getDistanceAndTime()
+            })
         }
     }
+    const getDistanceAndTime = () =>{
+        if(!trackingId) return
 
+            var locationData = JSON.parse(localStorage.getItem("location"))
+            let tempAt = product.address.at;
+            let temp2 = product.address.city;
+            let temp3 = product.address.state;
+            let newAddressAt = tempAt.split(" ").join("%20").split(",").join("%2C");
+            let newAddress = newAddressAt + "%20" + temp2 + "%20" + temp3;
+            console.log(product.address.at.replace(" ", "%20"));
+            
+            axios.get(`https://geocode.search.hereapi.com/v1/geocode?apiKey=Tfzn48GFLldThtLmzi5tv8B4xQG3NeQ_Bvhcc2_k1Qs&q=${newAddress}`)
+            .then((res)=>{
+                console.log("res",res.data)
+            })
+    }
     const otpVerify = () => {
         axios.post("http://localhost:2345/product/testroute", {})
     }
-
+    
+    
     return (
         <>
             <Navbar />
