@@ -6,6 +6,7 @@ const StyledSelectBox = styled.select`
     border: 2px solid grey;
     border-radius: 5px;
     outline: none;
+    font-size: 16px
 `;
 
 export { StyledSelectBox };

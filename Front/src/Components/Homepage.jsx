@@ -7,6 +7,7 @@ import { StyledPageTitle } from "./PageTitle";
 import { StyledPackageDetails } from "./StyledPackageDetails";
 import { StyledSelectBox } from "./StyledSelectBox";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 const StyledPincodeInput = styled.div`
     display: flex;
@@ -125,6 +126,9 @@ const Home = () => {
                         <StyledPageTitle>
                             Book your pickup
                         </StyledPageTitle>
+                        <h2 style={{textAlign:"center"}}>
+                            <Link to="/packaging" style={{color: "black"}}>Packaging Prices</Link>
+                             </h2>
                         <StyledPincodeForm onSubmit={handleSubmit}>
                             <StyledPackageDetails>
                                 <div className="title">Package Details</div>
@@ -199,6 +203,9 @@ const Home = () => {
                                     <option value="babycare">Babycare</option>
                                     <option value="electronics">Electronics</option>
                                     <option value="household">Household Items</option>
+                                    <option value="covidessentials">Covid Essentials</option>
+                                    <option value="consumables">Consumables / FMCG</option>
+                                    <option value="documents">Documents</option>
                                     <option value="others">Others</option>
                                 </StyledSelectBox>
 
