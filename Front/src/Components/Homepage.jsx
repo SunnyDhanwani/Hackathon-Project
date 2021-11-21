@@ -58,22 +58,23 @@ const initAllData = {
 const Home = () => {
     const [step, setStep] = useState(1);
     const [allData, setAllData] = useState(initAllData);
-    
+
     const handleInput = ({ target }) => {
         setAllData({ ...allData, [target.name]: target.value });
     }
-    
-    const handleSubmitPay = () =>{
-        axios.post("http://localhost:2345/product",{name: allData.fullName,
-        email: allData.email,
-        phone: allData.mobile,
-        address: {
-            at: allData.area,
-            pincode: allData.pincode,
-            city: allData.city,
-            state: allData.state,
-        },
-       })
+
+    const handleSubmitPay = () => {
+        axios.post("http://localhost:2345/product", {
+            name: allData.fullName,
+            email: allData.email,
+            phone: allData.mobile,
+            address: {
+                at: allData.area,
+                pincode: allData.pincode,
+                city: allData.city,
+                state: allData.state,
+            },
+        })
         console.log(1234)
     }
     const handleSubmit = (e) => {
@@ -89,7 +90,7 @@ const Home = () => {
     return (
         <>
             <Navbar />
-            
+
             {step === 1
                 ? <>
                     <StyledPincodeInput>
@@ -261,14 +262,7 @@ const Home = () => {
                                             value={allData.email}
                                             handleInput={handleInput}
                                         />
-                                        <div className="inputField">Flat, House No., Building, Apartment</div>
-                                        <InputBox
-                                            name="house"
-                                            type="text"
-                                            value={allData.house}
-                                            handleInput={handleInput}
-                                        />
-                                        <div className="inputField">Area, Sector, Street</div>
+                                        <div className="inputField">House No., Area, Street</div>
                                         <InputBox
                                             name="area"
                                             type="text"
@@ -296,7 +290,7 @@ const Home = () => {
                                             value={allData.pincode}
                                             handleInput={handleInput}
                                         />
-                                    
+
                                     </div>
                                     <br />
                                     <br />
@@ -330,7 +324,7 @@ const Home = () => {
                                                     title="PREV"
                                                 />
                                             </div>
-                                            <button onClick={handleSubmitPay}>Pay now</button>
+                                            <button className="btn" onClick={handleSubmitPay}>Pay now</button>
                                         </div>
                                     </StyledPackageDetails>
                                 </StyledPincodeForm>

@@ -26,7 +26,7 @@ const Navbar = () => {
         <>
             <StyledNavbar>
                 <div className="left-nav">
-                    <img src="https://direct.delhivery.com/assets/images/logo.png" alt="logo" />
+                    <img style={{ width: "50px", height: "50px", objectFit: "cover", borderBottom: "1px solid white", boxShadow: "0 8px 6px -6px white"}} src="https://www.shareicon.net/data/512x512/2016/05/27/771325_transport_512x512.png" alt="logo" />
                 </div>
                 <div className="right-nav">
                     <NavItem
