@@ -66,6 +66,27 @@ input::-webkit-inner-spin-button {
   color: whitesmoke;
 }
 
+.allProdDisp th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: center;
+  background-color: #d30202;
+  color: white;
+}
+
+.allProdDisp tr:hover {background-color: rgb(238, 179, 16) !important; color: black; cursor: pointer;}
+
+.allProdDisp tr:nth-child(even){background-color: #f2f2f2;}
+
+.allProdDisp tr:nth-child(odd){background-color: lightcyan;}
+
+.allProdDisp td, #customers th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+
+
 /* .banner-img {
   background-image: url("https://direct.delhivery.com/assets/images/direct-banner.jpg");
   background-color: #cccccc;
