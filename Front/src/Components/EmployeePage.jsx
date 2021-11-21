@@ -6,15 +6,31 @@ import { Navbar } from './Navbar'
 export default function EmployeePage() {
   const [status, setStatus] = useState(false)
   const { handleEmployeeLocation } = useContext(EmployeeContext)
+  const [array, setArray] = useState([]);
+
   const [data, setData] = useState([]);
 
   useEffect(() => {
     axios.get("http://localhost:2345/product/")
       .then((res) => {
         setData([...res.data.data])
-        console.log("res", res.data.data);
       })
   }, []);
+  function handleaddressassign(){
+    var allproducts = [];
+    axios.get("http://localhost:2345/product/") 
+    .then((res)=>{
+        // setProducts(res.data)
+        allproducts = res.data.data;
+        // for (let i = 0; i < allproducts.length; i++){
+        //     console.log(allproducts[i]);
+        // }
+        setArray(allproducts.filter((e)=>{return e.address.city === "Alwar"}))
+        // console.log(newarray);
+        // setProduct(res.data.data)
+    })
+
+}
 
   const handleNotify = (id) => {
     data.map((item) => item.id === id ? { ...item, onwayStatus: true } : item)
@@ -28,14 +44,13 @@ export default function EmployeePage() {
     };
     function success(pos) {
       const crd = pos.coords;
-      console.log(pos.coords)
       cordinates.latitude = crd.latitude;
       cordinates.longitude = crd.longitude;
       // console.log(`More or less ${crd.accuracy} meters.`);
     }
 
     function error(err) {
-      console.warn(`ERROR(${err.code}): ${err.message}`);
+      // console.warn(`ERROR(${err.code}): ${err.message}`);
     }
     var options = {
       enableHighAccuracy: true,
@@ -50,16 +65,13 @@ export default function EmployeePage() {
     setTimeout(() => {
       var latitude = cordinates["latitude"];
       var longitude = cordinates["longitude"]
-      console.log("latitude", latitude)
-      console.log("longiitude", longitude)
       if (!latitude) return
       fetch(
         `https://revgeocode.search.hereapi.com/v1/revgeocode?at=${latitude}%2C${longitude}&lang=en-US&apikey=F4NOucAeGs_1k8Lh0YGGfT_vYV_tNl7x6isUF3pePlQ`
       )
         .then(response => response.json())
         .then(data => {
-          console.log(data.items[0].address)
-          localStorage.setItem("location", JSON.stringify(data.items[0].address))
+          localStorage.setItem("location", JSON.stringify(data.items[0]))
         });
     }, 1000);
   };
@@ -67,11 +79,14 @@ export default function EmployeePage() {
   //   Tfzn48GFLldThtLmzi5tv8B4xQG3NeQ_Bvhcc2_k1Qs
   //   F4NOucAeGs_1k8Lh0YGGfT_vYV_tNl7x6isUF3pePlQ
   useEffect(() => {
-    //   setInterval(getAddress(),50000)      
+    //   setInterval(getAddress(),50000)  
+    handleaddressassign();
     getAddress()
   }, [])
   return (
+    
     <>
+    {console.log(array)}
       <Navbar />
       <div style={{ display: "flex", justifyContent: "center", marginTop: "10px" }}>
         <table className="allProdDisp">
@@ -84,8 +99,8 @@ export default function EmployeePage() {
             <th>Action</th>
           </tr>
           {
-            data.map((item) =>
-              <tr>
+            array.map((item) =>
+              <tr id={item._id}>
                 <td>{item._id}</td>
                 <td>{item.name}</td>
                 <td>{item.address.at + ", " + item.address.city + ", " + item.address.state + ", " + item.address.pincode}</td>
