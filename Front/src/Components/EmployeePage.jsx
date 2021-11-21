@@ -29,12 +29,31 @@ export default function EmployeePage() {
         // console.log(newarray);
         // setProduct(res.data.data)
     })
-
 }
 
-  const handleNotify = (id) => {
-    data.map((item) => item.id === id ? { ...item, onwayStatus: true } : item)
-    setStatus(true)
+  const handleNotify = (item) => {
+    if (item.warehouseStatus === true){
+      // in the notify
+      axios.post("http://localhost:2345/product/nextroute", {email: item.email})
+
+      axios.patch(`http://localhost:2345/product/${item["_id"]}`,{
+        warehouseStatus:false,onwayStatus:true
+      })
+    }else if(item.onwayStatus === true){
+      axios.patch(`http://localhost:2345/product/${item["_id"]}`,{
+        onwayStatus:false,deliveredStatus:true
+      })
+    }
+    // var xyz = [];
+    axios.get("http://localhost:2345/product/")
+    .then((res) => {
+      return [...res.data.data.filter((e)=>{return e.address.city === "Alwar"})]
+    }).then((res)=>{
+      setArray(res);
+    })
+    // console.log(abx);
+    // console.log("abrqa ka dabra");
+    // setArray(xyz);
   }
   const getCordinates = () => {
     navigator.geolocation.getCurrentPosition(success, error, options);
@@ -86,7 +105,6 @@ export default function EmployeePage() {
   return (
     
     <>
-    {console.log(array)}
       <Navbar />
       <div style={{ display: "flex", justifyContent: "center", marginTop: "10px" }}>
         <table className="allProdDisp">
@@ -106,7 +124,9 @@ export default function EmployeePage() {
                 <td>{item.address.at + ", " + item.address.city + ", " + item.address.state + ", " + item.address.pincode}</td>
                 <td>{item.phone}</td>
                 <td>{item.warehouseStatus ? "At warehouse" : item.onwayStatus ? "On the way" : item.deliveredStatus ? "Delivered" : "Some issues"}</td>
-                <td><button className="btn" onClick={() => handleNotify(item.productId)}>Notify</button></td>
+                <td><button className="btn" onClick={() => handleNotify(item)}>
+                  {item.warehouseStatus ? "Notify" : item.onwayStatus ? "Done" : "Delivered" }
+                  </button></td>
               </tr>
             )}
         </table>
